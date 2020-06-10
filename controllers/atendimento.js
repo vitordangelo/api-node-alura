@@ -1,7 +1,17 @@
+const Atendimento = require("../models/atendimento");
+
 module.exports = (app) => {
-  app.get("/atendimentos", (req, res) => res.send("Servidor rodando..."));
+  app.get("/atendimentos", (req, res) => {
+    Atendimento.lista(res);
+  });
+
+  app.get("/atendimento/:id", (req, res) => {
+    const id = parseInt(req.params.id);
+    Atendimento.buscaPorId(id, res);
+  });
+
   app.post("/atendimento", (req, res) => {
-    console.log(req.body);
-    res.send({ data: "Cadastrado" });
+    const atendimento = req.body;
+    Atendimento.adiciona(atendimento, res);
   });
 };
